@@ -4,6 +4,7 @@ module Counter
     elm-bookとは一部異なっています．
 *)
 
+open System
 open Elmish
 open Elmish.React
 open Elmish.Browser.Navigation
@@ -49,7 +50,8 @@ let view model dispatch =
             [ OnInput (fun x -> x.target?value |> string |> Input |> dispatch)
               Value model.Input ]
           R.button
-            [ OnClick (fun _ -> dispatch Submit) ]
+            [ Disabled <| String.IsNullOrWhiteSpace (model.Input)
+              OnClick (fun _ -> dispatch Submit) ]
             [ R.str "Submit" ]
           R.ul [] (List.map viewMemo model.Memos)
         ]
