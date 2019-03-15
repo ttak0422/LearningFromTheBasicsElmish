@@ -4,7 +4,7 @@ module Counter
 open Elmish
 open Elmish.React
 open Fable.Helpers.React.Props
-module R =  Fable.Helpers.React
+module R = Fable.Helpers.React
 
 
 // MODEL
