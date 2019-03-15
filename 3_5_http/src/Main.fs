@@ -6,7 +6,6 @@ open Elmish.React
 open Fable.Helpers.React.Props
 open Fable.SimpleHttp
 open Elmish.Browser.Navigation
-
 module R = Fable.Helpers.React
 
 
@@ -51,7 +50,7 @@ let update msg model =
 // VIEW
 let view model dispatch =
     R.div []
-        [ R.button [ OnClick (fun _ -> dispatch Click) ] [ R.str "Get"]
+        [ R.button [ OnClick (fun _ -> dispatch Click) ] [ R.str "Get" ]
           R.p [] [ R.str model.Result ] ]
 
 
