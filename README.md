@@ -28,3 +28,8 @@
 
     <img width="378" alt="Screen Shot 2019-03-16 at 17 36 27" src="https://user-images.githubusercontent.com/15827817/54472803-10cd1e00-4812-11e9-9061-3f62035c7487.png">
 
+- 3_8_clock
+
+    時刻を表示してみる
+
+    <img width="159" alt="Screen Shot 2019-03-16 at 20 56 34" src="https://user-images.githubusercontent.com/15827817/54474908-441da600-482e-11e9-8826-4e0f42626f1d.png">
