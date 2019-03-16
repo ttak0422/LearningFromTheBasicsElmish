@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "build": "webpack --mode=development",
+    "start": "webpack-dev-server --mode=development",
+    "release": "webpack --mode=production"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "fable-compiler": "^2.2.0-beta-018",
+    "fable-loader": "^2.1.5",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  }
+}

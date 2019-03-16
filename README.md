@@ -21,3 +21,10 @@
     GitHubのAPIを叩いてみる
 
     <img width="318" alt="Screen Shot 2019-03-15 at 11 25 02" src="https://user-images.githubusercontent.com/15827817/54403900-14c74600-4715-11e9-9ce3-8736cff9a3de.png">
+
+- 3_7_search
+
+    Jsonを扱う(せっかくなのでTypeProviderを使う)
+
+    <img width="378" alt="Screen Shot 2019-03-16 at 17 36 27" src="https://user-images.githubusercontent.com/15827817/54472803-10cd1e00-4812-11e9-9061-3f62035c7487.png">
+
