@@ -33,3 +33,12 @@
     時刻を表示してみる
 
     <img width="159" alt="Screen Shot 2019-03-16 at 20 56 34" src="https://user-images.githubusercontent.com/15827817/54474908-441da600-482e-11e9-8826-4e0f42626f1d.png">
+
+- 4_4_navigation
+
+    Elmishではパースとナビゲーションが密接な関係にあるので，パースしない以上ナビゲーションもしない．(タイトル詐欺)
+
+    Elmishはハッシュを使ったルーティングもサポートするが，
+    SPA(Single Page Application)をSSR(Server Side Rendering)するためにHistory APIを利用することにする．その動きを見てみる．
+
+    <img width="421" alt="Screen Shot 2019-03-21 at 14 38 54" src="https://user-images.githubusercontent.com/15827817/54735097-5f4e3400-4be7-11e9-82ad-ce1c40293447.png">
