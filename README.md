@@ -42,3 +42,9 @@
     SPA(Single Page Application)をSSR(Server Side Rendering)するためにHistory APIを利用することにする．その動きを見てみる．
 
     <img width="421" alt="Screen Shot 2019-03-21 at 14 38 54" src="https://user-images.githubusercontent.com/15827817/54735097-5f4e3400-4be7-11e9-82ad-ce1c40293447.png">
+
+- 4_4_navigation-github
+
+    これまで登場してきたことを組み合わせる．
+
+    <img width="332" alt="Screen Shot 2019-03-28 at 1 18 59" src="https://user-images.githubusercontent.com/15827817/55093318-90eb6180-50f7-11e9-8fe2-ad8e1d969e89.png">
