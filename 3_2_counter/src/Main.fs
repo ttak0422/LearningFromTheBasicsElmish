@@ -1,10 +1,9 @@
 module Counter
 
-open Counter.State
-open Counter.View
 open Elmish
 open Elmish.React
-open Elmish.ReactNative
+open Counter.State
+open Counter.View
 
 Program.mkProgram init update root
 |> Program.withReact "elmish-app"
