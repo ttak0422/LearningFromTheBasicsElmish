@@ -1,0 +1,54 @@
+module Nav.GitHub
+
+open Fable.SimpleHttp
+open Thoth.Json
+
+module D = Thoth.Json.Decode
+
+type Repo =
+    { Name : string
+      Description : Option<string>
+      Language : Option<string>
+      Owner : string
+      Fork : int
+      Star : int
+      Watch : int }
+
+    static member Decode : Decoder<_> =
+        Decode.object(fun get ->
+            { Name = get.Required.Field "name" Decode.string
+              Description = get.Optional.Field "descripiton" Decode.string
+              Language = get.Optional.Field "language" Decode.string
+              Owner = get.Required.At [ "owner"; "login" ] Decode.string
+              Fork = get.Required.Field "forks_count" Decode.int
+              Star = get.Required.Field "stargazers_count" Decode.int
+              Watch = get.Required.Field "watchers_count" Decode.int })
+    static member DecodeList : Decoder<_> =
+        Decode.list Repo.Decode
+
+type Issue =
+    { Number : int
+      Title : string
+      State : string }
+    static member Decode : Decoder<_> =
+        Decode.object(fun get ->
+            { Number = get.Required.Field "number" Decode.int
+              Title = get.Required.Field "title" Decode.string
+              State = get.Required.Field "state" Decode.string })
+    static member DecodeList : Decoder<_> =
+        Decode.list Issue.Decode
+
+let fetch url decoder =
+    async {
+        let! (status, res) = Http.get url
+        return
+            match status with
+            | 200 -> Decode.fromString decoder res
+            | x -> Error <| failwithf "Status : %d" x
+    }
+
+let getRepos userName =
+    fetch ("https://api.github.com/users/" + userName + "/repos") Repo.DecodeList
+
+let getIssues (userName, projectName) =
+    fetch ("https://api.github.com/repos/" + userName + "/" + projectName + "/issues") Issue.DecodeList

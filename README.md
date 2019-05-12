@@ -34,14 +34,6 @@
 
     <img width="159" alt="Screen Shot 2019-03-16 at 20 56 34" src="https://user-images.githubusercontent.com/15827817/54474908-441da600-482e-11e9-8826-4e0f42626f1d.png">
 
-- 4_4_navigation
-
-    Elmishではパースとナビゲーションが密接な関係にある(ツッコミポイント)ので，パースしない以上ナビゲーションもしない．(タイトル詐欺)
-    ちなみにElmishではハッシュを使ったナビゲーション，HistoryAPIを使ったナビゲーションの両方をサポートする．
-    ここではHitoryAPIを使いその動きを見てみる．
-
-    <img width="421" alt="Screen Shot 2019-03-21 at 14 38 54" src="https://user-images.githubusercontent.com/15827817/54735097-5f4e3400-4be7-11e9-82ad-ce1c40293447.png">
-
 - 4_7_navigation-github
 
     これまで登場してきたことを組み合わせる．

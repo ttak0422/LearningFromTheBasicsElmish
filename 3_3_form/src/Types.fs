@@ -1,9 +1,9 @@
 module Form.Types
 
-type Model =
+type Model = 
     { Input : string
       Memos : string list }
 
-type Msg =
+type Msg = 
     | Input of string
     | Submit

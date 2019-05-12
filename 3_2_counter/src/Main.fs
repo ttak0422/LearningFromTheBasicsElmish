@@ -6,5 +6,5 @@ open Counter.State
 open Counter.View
 
 Program.mkProgram init update root
-|> Program.withReact "elmish-app"
+|> Program.withReactBatched "elmish-app"
 |> Program.run

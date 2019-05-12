@@ -3,9 +3,10 @@ module Counter.State
 open Elmish
 open Types
 
-let init() : Model * Cmd<Msg> = 0, Cmd.none
+let init () =
+    { Count = 0 }, Cmd.none
 
-let update msg model : Model * Cmd<Msg> =
+let update msg model =
     match msg with
-    | Increment -> model + 1, Cmd.none
-    | Decrement -> model - 1, Cmd.none
+    | Incr -> { model with Count = model.Count + 1 }, Cmd.none
+    | Decr -> { model with Count = model.Count - 1 }, Cmd.none

@@ -1,10 +1,9 @@
 module Http.View
 
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Types
 
-module R = Fable.Helpers.React
-
 let root model dispatch =
-    R.div [] [ R.button [ OnClick(fun _ -> dispatch Click) ] [ R.str "Get" ]
-               R.p [] [ R.str model.Result ] ]
+    div [] [ button [ OnClick(fun _ -> dispatch Click) ] [ str "Get" ]
+             p [] [ str model.Result ] ] 

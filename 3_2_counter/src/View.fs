@@ -1,12 +1,11 @@
 module Counter.View
 
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Types
-
-module R = Fable.Helpers.React
 
 let root model dispatch =
     let onClick msg = OnClick(fun _ -> dispatch msg)
-    R.div [] [ R.button [ onClick Decrement ] [ R.str "-" ]
-               R.div [] [ R.str (string model) ]
-               R.button [ onClick Increment ] [ R.str "+" ] ]
+    div [] [ button [ onClick Decr ] [ str "-"] 
+             div [] [ str <| string model.Count ]
+             button [ onClick Incr ] [ str "+"] ]

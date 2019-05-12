@@ -1,7 +1,11 @@
 source https://www.nuget.org/api/v2
-
-storage:none
+storage: none
 nuget FSharp.Core redirects: force
-nuget Fable.Elmish
-nuget Fable.Elmish.React
-nuget Fable.Elmish.Browser
+
+group FableElmish
+    source https://www.nuget.org/api/v2
+    storage: none
+    nuget Fable.Elmish
+    nuget Fable.Elmish.React
+    nuget Fable.Elmish.Browser
+    nuget Fable.Browser.Dom

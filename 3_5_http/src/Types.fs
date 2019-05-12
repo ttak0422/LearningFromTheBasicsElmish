@@ -1,9 +1,9 @@
 module Http.Types
 
-type Model =
+type Model = 
     { Result : string }
 
-type Msg =
+type Msg = 
     | Click
-    | GotRepo of string
+    | GotRepo of Result<string, string> 
     | GotRepoErr of exn

@@ -1,39 +1,39 @@
 module SearchBox.View
 
-open Fable.Core.JsInterop
-open Fable.Helpers.React.Props
 open System
+open Fable.Core.JsInterop
+open Fable.React
+open Fable.React.Props
+open GitHub
 open Types
 
-module R = Fable.Helpers.React
-
 let root model dispatch =
+    let showUser user =
+        a [ Href user.HtmlUrl
+            Target "_blank" ]
+          [ img [ Src user.AvatarUrl
+                  Style [ Width 200 ] ]
+            div [] [str user.Name ]
+            div [] [ (match user.Bio with
+                      | Some x -> str x
+                      | None -> str "") ] ]
+
     let internalView model =
         match model.UserState with
-        | Init -> R.str ""
-        | Waiting -> R.str "Waiting..."
-        | Loaded user ->
-            R.a [ Href user.HtmlUrl
-                  Target "_blank" ] [ R.img [ Src user.AvatarUrl
-                                              Style [ Width 200 ] ]
-                                      R.div [] [ R.str user.Name ]
-                                      R.div [] [ (match user.Bio with
-                                                  | Some x -> R.str x
-                                                  | None -> R.str "") ] ]
-        | Failed e -> R.str (string e)
-    R.div [] [ R.div []
-                   [ R.input [ OnChange(fun e ->
-                                   e.target?value
-                                   |> string
-                                   |> Input
-                                   |> dispatch)
-                               AutoFocus true
-                               Placeholder "GitHub name"
-                               Value model.Input ]
+        | Init -> str ""
+        | Waiting -> str "Waiting..."
+        | Loaded user -> showUser user
+        | Failed e -> str <| string e
 
-                     R.button [ Disabled
-                                    ((model.UserState = Waiting)
-                                     || (String.IsNullOrWhiteSpace model.Input))
-                                OnClick(fun _ -> dispatch Send) ]
-                         [ R.str "Submit" ] ]
-               R.div [] [ internalView model ] ]
+    div [] [
+        div [] [ input [ OnInput(fun x -> x.target?value |> string |> Input |> dispatch)
+                         // OnInput(fun x -> Fable.Core.JS.console.log("log:" + x.target?value))
+                         Value model.Input
+                         AutoFocus true
+                         Placeholder "GitHub user" ]
+                 button [ Disabled
+                            ((String.IsNullOrWhiteSpace model.Input)
+                            || (model.UserState = Waiting))
+                          OnClick(fun _ -> dispatch Send) ]
+                       [ str "Submit" ] ]
+        div [] [ internalView model ] ]

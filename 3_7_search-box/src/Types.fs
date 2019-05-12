@@ -15,5 +15,5 @@ type Model =
 type Msg =
     | Input of string
     | Send
-    | ReceiveUser of User
+    | ReceiveUser of Result<User, string>
     | ReceiveUserErr of exn

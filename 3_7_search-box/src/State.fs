@@ -14,6 +14,7 @@ let update msg model : Model * Cmd<Msg> =
     | Send ->
         { model with Input = ""
                      UserState = Waiting },
-        getUser ReceiveUser ReceiveUserErr model.Input
-    | ReceiveUser user -> { model with UserState = Loaded user }, Cmd.none
+        Cmd.OfAsync.either getUser model.Input ReceiveUser ReceiveUserErr
+    | ReceiveUser (Ok user) -> { model with UserState = Loaded user }, Cmd.none
+    | ReceiveUser (Error e) -> { model with UserState = Failed <| failwith e }, Cmd.none
     | ReceiveUserErr e -> { model with UserState = Failed e }, Cmd.none

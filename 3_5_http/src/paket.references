@@ -1,5 +1,8 @@
-Fable.Core
-Fable.Elmish
-Fable.Elmish.React
-Fable.Elmish.Browser
+Fsharp.Core
 Fable.SimpleHttp
+
+group FableElmish
+    Fable.Core
+    Fable.Elmish
+    Fable.Elmish.React
+    Fable.Elmish.Browser

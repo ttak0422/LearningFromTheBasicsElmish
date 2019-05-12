@@ -1,8 +1,7 @@
 module SearchBox.GitHub
 
-open Elmish
-open Fable.PowerPack
-open Fable.PowerPack.Fetch
+open Fable.SimpleHttp
+open Thoth.Json
 
 module D = Thoth.Json.Decode
 
@@ -13,16 +12,24 @@ type User =
       HtmlUrl : string
       Bio : Option<string> }
 
-let userDecoder : D.Decoder<User> =
-    D.object (fun get ->
-        { Login = get.Required.Field "login" D.string
-          AvatarUrl = get.Required.Field "avatar_url" D.string
-          Name = get.Required.Field "name" D.string
-          HtmlUrl = get.Required.Field "html_url" D.string
-          Bio = get.Optional.Field "bio" D.string })
 
-let getUser toOkMsg toErrMsg name =
-    let fetch (url, (decoder : D.Decoder<'a>)) =
-        promise { return! fetchAs<'a> url decoder [] }
-    let url = "https://api.github.com/users/" + name
-    Cmd.ofPromise fetch (url, userDecoder) toOkMsg toErrMsg
+    static member Decoder : Decoder<User> =
+        Decode.object (fun get ->
+            { Login = get.Required.Field "login" Decode.string
+              AvatarUrl = get.Required.Field "avatar_url" D.string
+              Name = get.Required.Field "name" D.string
+              HtmlUrl = get.Required.Field "html_url" D.string
+              Bio = get.Optional.Field "bio" D.string })
+
+
+
+let getUser name =
+    let fetchUser name =
+        Http.get <| "https://api.github.com/users/" + name
+    async {
+        let! (status, res) = fetchUser name
+        return
+            match status with
+            | 200 -> Decode.fromString User.Decoder res
+            | x -> Error <| failwithf "Status : %d" x
+    }

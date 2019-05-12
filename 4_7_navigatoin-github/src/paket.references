@@ -1,8 +1,9 @@
 Fsharp.Core
+Fable.SimpleHttp
+Thoth.Json
 
 group FableElmish
     Fable.Core
     Fable.Elmish
     Fable.Elmish.React
     Fable.Elmish.Browser
-    Fable.Browser.Dom

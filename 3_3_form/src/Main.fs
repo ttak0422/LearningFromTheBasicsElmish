@@ -6,5 +6,5 @@ open Form.State
 open Form.View
 
 Program.mkProgram init update root
-|> Program.withReact "elmish-app"
+|> Program.withReactBatched "elmish-app"
 |> Program.run
