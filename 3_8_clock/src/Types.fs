@@ -5,4 +5,5 @@ open System
 type Model =
     { Time : DateTime }
 
-type Msg = Tick of DateTime
+type Msg =
+    | Tick of DateTime
