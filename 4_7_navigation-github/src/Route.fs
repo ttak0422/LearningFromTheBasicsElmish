@@ -1,8 +1,6 @@
-module Route
+module Nav.Route
 
-
-open Elmish.Browser.UrlParser
-
+open Elmish.UrlParser
 
 type UserName = string
 
@@ -12,15 +10,15 @@ type Route =
     | Top
     | User of UserName
     | Repo of UserName * ProjectName
-    with
-        static member toHash = function
-            | Top -> "#"
-            | User userName -> "#/user/" + userName
-            | Repo (userName,projectName) -> "#/repo/" + userName + "/" + projectName
+    static member ToHash =
+        function
+        | Top -> "#"
+        | User userName -> "#user/" + userName
+        | Repo (userName, projectName) -> "#repo/" + userName + "/" + projectName
 
-let parser : Parser<Route->Route,Route> =
+let parser : Parser<Route->Route, Route> =
     let curry f x y = f (x, y)
-    oneOf [
+    oneOf[
         map Top top
         map User (s "user" </> str)
         map (curry Repo) (s "repo" </> str </> str)

@@ -1,16 +1,9 @@
-module GitHub
+module Nav.GitHub
 
-(*
-    型注釈書きましょう！！
-    TODO: URLのパーセントエンコーディング
-*)
+open Fable.SimpleHttp
+open Thoth.Json
 
-open Elmish
-open Fable.PowerPack
-open Fable.PowerPack.Fetch
-open System.Web
 module D = Thoth.Json.Decode
-
 
 type Repo =
     { Name : string
@@ -21,61 +14,41 @@ type Repo =
       Star : int
       Watch : int }
 
+    static member Decode : Decoder<_> =
+        Decode.object(fun get ->
+            { Name = get.Required.Field "name" Decode.string
+              Description = get.Optional.Field "descripiton" Decode.string
+              Language = get.Optional.Field "language" Decode.string
+              Owner = get.Required.At [ "owner"; "login" ] Decode.string
+              Fork = get.Required.Field "forks_count" Decode.int
+              Star = get.Required.Field "stargazers_count" Decode.int
+              Watch = get.Required.Field "watchers_count" Decode.int })
+    static member DecodeList : Decoder<_> =
+        Decode.list Repo.Decode
+
 type Issue =
     { Number : int
       Title : string
       State : string }
+    static member Decode : Decoder<_> =
+        Decode.object(fun get ->
+            { Number = get.Required.Field "number" Decode.int
+              Title = get.Required.Field "title" Decode.string
+              State = get.Required.Field "state" Decode.string })
+    static member DecodeList : Decoder<_> =
+        Decode.list Issue.Decode
 
-
-let private repoDecoder : D.Decoder<Repo> =
-    D.map7 (fun a b c d e f g -> {
-            Name = a
-            Description = b
-            Language = c
-            Owner = d
-            Fork = e
-            Star = f
-            Watch = g } )
-        (D.field "name" D.string)
-        (D.option (D.field "description" D.string))
-        (D.option (D.field "language" D.string))
-        (D.at [ "owner"; "login" ] D.string)
-        (D.field "forks_count" D.int)
-        (D.field "stargazers_count" D.int)
-        (D.field "watchers_count" D.int)
-
-let private reposDecoder : D.Decoder<Repo list> =
-    D.list repoDecoder
-
-let private issueDecoder : D.Decoder<Issue> =
-    D.map3 (fun a b c ->
-        { Number = a
-          Title = b
-          State = c } )
-        (D.field "number" D.int)
-        (D.field "title" D.string)
-        (D.field "state" D.string)
-
-let private issuesDecoder : D.Decoder<Issue list> =
-    D.list issueDecoder
-
-let private fetch (url, (decoder:D.Decoder<'a>)) =
-    promise {
-        return! fetchAs<'a> url decoder []
+let fetch url decoder =
+    async {
+        let! (status, res) = Http.get url
+        return
+            match status with
+            | 200 -> Decode.fromString decoder res
+            | x -> Error <| failwithf "Status : %d" x
     }
 
-(*
-    3_5_httpの例のようにFable.SimpleHttp使ってエラー処理すると楽
-    手抜き＆fable Powerpack(http://fable.io/fable-powerpack/)の紹介用
-    APIの返答がError: 404 Not Found for URLでも動作自体にエラーが無ければOKになる．
-*)
-let getRepos toOkMsg toErrMsg userName =
-    let rawUrl = "https://api.github.com/users/" + userName + "/repos"
-    Cmd.ofPromise fetch (rawUrl, reposDecoder) toOkMsg toErrMsg
+let getRepos userName =
+    fetch ("https://api.github.com/users/" + userName + "/repos") Repo.DecodeList
 
-(*
-    上に同じ
-*)
-let getIssues toOkMsg toErrMsg userName projectName =
-    let rawUrl = "https://api.github.com/repos/" + userName  + "/" + projectName + "/issues"
-    Cmd.ofPromise fetch (rawUrl, issuesDecoder) toOkMsg toErrMsg
+let getIssues (userName, projectName) =
+    fetch ("https://api.github.com/repos/" + userName + "/" + projectName + "/issues") Issue.DecodeList
