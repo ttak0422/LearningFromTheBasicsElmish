@@ -5,9 +5,12 @@
   <ItemGroup>
     <Compile Include="GitHub.fs" />
     <Compile Include="Route.fs" />
-    <Compile Include="Page/Repo.fs" />
-    <Compile Include="Page/Top.fs" />
-    <Compile Include="Page/User.fs" />
+    <Compile Include="TopPage.fs" />
+    <Compile Include="RepoPage.fs" />
+    <Compile Include="UserPage.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="State.fs" />
+    <Compile Include="View.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
