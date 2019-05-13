@@ -1,21 +1,27 @@
-module SortableTable
+module Table.SortableTable
+
+open Fable.React
+open Fable.React.Props
 
 
-open Fable.Helpers.React.Props
-module R = Fable.Helpers.React
-
+// Types
 
 type State =
     { SortedColumn : Option<string>
       Reversed : bool }
 
+type Msg =
+    | Sort of string
+
+type Config<'a> =
+    { Columns : string list
+      ToValue : string -> 'a -> string }
+
+// State
+
 let init () =
     { SortedColumn = None
       Reversed = false }
-
-
-type Msg =
-    | Sort of string
 
 let update msg state =
     match msg with
@@ -23,12 +29,9 @@ let update msg state =
         if state.SortedColumn = Some column then
             { state with Reversed = not state.Reversed }
         else
-            { state with SortedColumn = Some column; Reversed = false }
-
-
-type Config<'a> =
-    { Columns : string list
-      ToValue : string -> 'a -> string }
+            { state with
+                SortedColumn = Some column
+                Reversed = false }
 
 let sort config state items =
     match state.SortedColumn with
@@ -38,31 +41,23 @@ let sort config state items =
     | None ->
         items
 
-(*
-    呼び出し元からのdispatcherを各関数で引数としてもらうようにするのは大変，
-    他で呼び出すこともないのでローカル関数とした．
-*)
 let view config state items dispatch =
-    let onClick msg = OnClick (fun _ -> dispatch msg)
+    let onClick msg = OnClick(fun _ -> dispatch msg)
 
     let headerCell config state columnId =
         let label =
             columnId +
             match (state.SortedColumn = Some columnId, state.Reversed) with
             | (true, false) -> "(↓)"
-            | (true, true) ->  "(↑)"
+            | (true, true) -> "(↑)"
             | _ -> ""
-        R.th [ onClick <| Sort columnId ] [ R.str label ]
-
-    let bodyCell config item columnId  =
-        R.td [] [ R.str <| config.ToValue columnId item ]
-
+        th [ onClick <| Sort columnId ] [ str label ]
+    let bodyCell config item columnId =
+        td [] [ str <| config.ToValue columnId item ]
     let headerRow config state =
-        R.tr [] (List.map (headerCell config state) config.Columns)
-
+        tr [] (List.map (headerCell config state) config.Columns)
     let bodyRow config item =
-        R.tr [] (List.map (bodyCell config item) config.Columns)
-
-    R.table []
-        [ R.thead [] [ headerRow config state ]
-          R.tbody [] (List.map (bodyRow config) (sort config state items)) ]
+        tr [] (List.map (bodyCell config item) config.Columns)
+    table []
+        [ thead [] [ headerRow config state ]
+          tbody [] (List.map (bodyRow config) (sort config state items)) ]
