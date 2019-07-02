@@ -2,6 +2,7 @@ module SearchBox.GitHub
 
 open Fable.SimpleHttp
 open Thoth.Json
+open Elmish.UrlBuilder.Builder
 
 module D = Thoth.Json.Decode
 
@@ -25,7 +26,7 @@ type User =
 
 let getUser name =
     let fetchUser name =
-        Http.get <| "https://api.github.com/users/" + name
+        Http.get <| crossOrigin "https://api.github.com" [ "users"; name ] []
     async {
         let! (status, res) = fetchUser name
         return

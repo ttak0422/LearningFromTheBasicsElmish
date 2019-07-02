@@ -27,7 +27,6 @@ let root model dispatch =
 
     div [] [
         div [] [ input [ OnInput(fun x -> x.target?value |> string |> Input |> dispatch)
-                         // OnInput(fun x -> Fable.Core.JS.console.log("log:" + x.target?value))
                          Value model.Input
                          AutoFocus true
                          Placeholder "GitHub user" ]

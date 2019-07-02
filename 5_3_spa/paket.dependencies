@@ -1,5 +1,6 @@
 source https://www.nuget.org/api/v2
 storage: none
+nuget Fable.Elmish.UrlBuilder
 nuget Fable.SimpleHttp
 nuget FSharp.Core redirects: force
 nuget Thoth.Json
