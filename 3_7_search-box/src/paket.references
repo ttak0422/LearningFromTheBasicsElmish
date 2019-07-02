@@ -1,4 +1,5 @@
 Fsharp.Core
+Fable.Elmish.UrlBuilder
 Fable.SimpleHttp
 Thoth.Json
 group FableElmish
