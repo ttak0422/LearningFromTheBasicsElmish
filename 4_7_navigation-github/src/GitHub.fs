@@ -2,6 +2,7 @@ module Nav.GitHub
 
 open Fable.SimpleHttp
 open Thoth.Json
+open Elmish.UrlBuilder.Builder
 
 module D = Thoth.Json.Decode
 
@@ -48,7 +49,9 @@ let fetch url decoder =
     }
 
 let getRepos userName =
-    fetch ("https://api.github.com/users/" + userName + "/repos") Repo.DecodeList
+    let url = crossOrigin "https://api.github.com" [ "users"; userName; "repos" ] []
+    fetch url Repo.DecodeList
 
 let getIssues (userName, projectName) =
-    fetch ("https://api.github.com/repos/" + userName + "/" + projectName + "/issues") Issue.DecodeList
+    let url = crossOrigin "https://api.github.com" [ "repos"; userName; projectName; "issues" ] []
+    fetch url Issue.DecodeList
