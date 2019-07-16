@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "scripts": {
-    "build" : "webpack --mode=development"
+    "build": "webpack --mode=development"
   },
   "dependencies": {
     "react": "^16.8.6",
